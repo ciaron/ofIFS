@@ -41,14 +41,14 @@ void ofApp::draw(){
 
   for (int n=0; n<width*height; n++){
 
-      if (points[n] > 0) {
+    if (points[n] > 0) {
 
-          screenPixels[n*4] = 255;
-          screenPixels[(n*4)+1] = 255;
-          screenPixels[(n*4)+2] = 255;
-          screenPixels[(n*4)+3] = (int)(ofRandom(1.0)* 255);
+      screenPixels[n*4] = 255;
+      screenPixels[(n*4)+1] = 255;
+      screenPixels[(n*4)+2] = 255;
+      screenPixels[(n*4)+3] = (int)(ofRandom(1.0)* 255);
 
-      }
+    }
   }
 
   screen.update();
