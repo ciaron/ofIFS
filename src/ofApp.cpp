@@ -25,7 +25,8 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-  // replace the P5 calc() function;
+  /* replace the P5 calc() function; */
+
   points[ofRandom(1.0) * wh] = 1;
 
 }
