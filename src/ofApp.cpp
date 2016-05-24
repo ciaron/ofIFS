@@ -8,8 +8,15 @@ void ofApp::init() {
   points.resize(wh);
   std::fill(points.begin(), points.end(), 0);
 
-  ix = ofRandom(1.0);
-  iy = ofRandom(1.0);
+  ix = ofRandom(min, max);
+  iy = ofRandom(min, max);
+
+  // see http://openframeworks.cc/ofBook/chapters/how_of_works.html
+  pixels.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
+  pixels.set(0);
+
+  tex.allocate(width, height, GL_RGBA);
+
 }
 
 //--------------------------------------------------------------
@@ -25,7 +32,7 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-  /* replace the P5 calc() function; */
+  /* replace the P5 version's calc() function; */
 
   points[ofRandom(1.0) * wh] = 1;
 
@@ -33,26 +40,32 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+  ofEnableAlphaBlending();
 
-  screen.grabScreen(0, 0, width, height);
-  screen.setImageType(OF_IMAGE_COLOR_ALPHA);
+  //screen.grabScreen(0, 0, width, height);
+  //screen.setImageType(OF_IMAGE_COLOR_ALPHA);
 
-  unsigned char * screenPixels = screen.getPixels();
-
+  //unsigned char * screenPixels = screen.getPixels();
+  //ofBackground(0);
   for (int n=0; n<width*height; n++){
 
-      if (points[n] > 0) {
 
-          screenPixels[n*4] = 255;
-          screenPixels[(n*4)+1] = 255;
-          screenPixels[(n*4)+2] = 255;
-          screenPixels[(n*4)+3] = (int)(ofRandom(1.0)* 255);
+      if (points[n] > 0) {
+          pixels.setColor(n*4, ofColor(255,255,255, (int)(ofRandom(0,255))));
+          //pixels.setColor(n*4, ofColor(0,255,0));
+
+          //screenPixels[n*4] = 255;
+          //screenPixels[(n*4)+1] = 255;
+          //screenPixels[(n*4)+2] = 255;
+          //screenPixels[(n*4)+3] = (int)(ofRandom(1.0)* 255);
 
       }
   }
 
-  screen.update();
-  screen.draw(0,0,width,height);
+  //screen.update();
+  //screen.draw(0,0,width,height);
+  tex.loadData(pixels);
+  tex.draw(0,0);
 }
 
 //--------------------------------------------------------------

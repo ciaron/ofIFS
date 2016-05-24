@@ -23,8 +23,9 @@ class ofApp : public ofBaseApp{
     vector<ofVec2f> transforms;
     vector<int> points;  // 'hit count' for pixels
 
-    ofImage screen;
-    //ofPixels screenPixels;
+    //ofImage screen;
+    ofPixels pixels;
+    ofTexture tex;
 
 	public:
         void init();
