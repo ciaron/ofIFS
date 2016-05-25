@@ -31,19 +31,54 @@ void ofApp::init() {
   for (int i=0; i<nt; i++){
 
     vector<float> t;
-    //cout << size << ", " << t.size() << endl;
 
     for (int j=0; j<size-2; ++j){
-      t.push_back(ofRandom(-1.0,1.0));
+      t.push_back(ofRandom(-1.0, 1.0));
     }
 
     for (int j=size-2; j<size; ++j){
       t.push_back(ofRandom(-0.5, 0.5));
     }
 
+    t[1] = 0.0;
+    t[2] = -1.0*t[1];
+
     transforms.push_back(t);
 
   }
+
+//    vector<float> t1, t2, t3;
+
+//    t1.push_back(0.5);
+//    t1.push_back(0);
+//    t1.push_back(0);
+
+//    t1.push_back(0.5);
+//    t1.push_back(0);
+//    t1.push_back(0);
+
+//    transforms.push_back(t1);
+
+//    t2.push_back(0.5);
+//    t2.push_back(0);
+//    t2.push_back(0);
+
+//    t2.push_back(0.5);
+//    t2.push_back(0.25);
+//    t2.push_back(0);
+
+//    transforms.push_back(t2);
+
+//    t3.push_back(0.5);
+//    t3.push_back(0);
+//    t3.push_back(0);
+
+//    t3.push_back(0.5);
+//    t3.push_back(0.25);
+//    t3.push_back(0.25);
+
+
+//    transforms.push_back(t3);
 
 }
 
@@ -58,32 +93,43 @@ void ofApp::setup(){
     init();
 }
 
+int ofApp::chooseTransform(int n){
+  //return (int)ofRandom(0,n);
+
+  float r = ofRandom(1.0);
+
+  if (r<probs[0]) {
+      return 0;
+  } else if (r<probs[1]) {
+      return 1;
+  } else if (r<probs[2]) {
+      return 2;
+  } else if (r<probs[3]) {
+      return 3;
+  } else if (r<probs[4]) {
+      return 4;
+  } else if (r<probs[5]) {
+      return 5;
+  }
+
+}
+
 //--------------------------------------------------------------
 void ofApp::update(){
-  /* replace the P5 version's calc() function; */
-
-  //points[ofRandom(1.0) * wh] = 1;
 
   for (int i=0; i<np; i++) {
 
-      int tn = (int)ofRandom(0,nt);
+      //int tn = (int)ofRandom(0,nt);
+      int tn = chooseTransform(nt);
+
       vector<float> tr = transforms[tn];
 
       x = ix*tr[0] + iy*tr[1] + tr[4];
       y = ix*tr[2] + iy*tr[3] + tr[5];
 
-      //cout << x << ", " << y << endl;
-      //cout << transforms.size() << ", " << tn << endl;
-//      cout << tr.size() <<  endl;
-
-//      for (std::vector<float>::const_iterator i = tr.begin(); i != tr.end(); ++i)
-//          std::cout << *i << ' ';
-
       // store points, if inside view
       X = (int)ofMap(x, min, max, 0, width-1);
       Y = (int)ofMap(y, min, max, 0, height-1);
-
-//      cout << X << ", " << Y << endl;
 
       if (X>0 && X<width && Y>0 && Y<height) {
         points[Y*width+X] += 1;
@@ -119,15 +165,21 @@ void ofApp::draw(){
 void ofApp::keyPressed(int key){
     if(key == 's'){
 
+        std::time_t result = std::time(nullptr);
+        //std::cout << std::asctime(std::localtime(&result))
+        //          << result << " seconds since the Epoch\n";
+        std::localtime(&result);
 
-        uint64_t ts = ofGetElapsedTimeMillis();
+        /*uint64_t ts = ofGetElapsedTimeMillis(); */
         stringstream ss;
-        ss << ts;
+        //ss << ts;
+        ss << result;
         std::string tss = std::string(12 - ss.str().length(), '0') + ss.str();
-        cout << ss.str() << ", " << tss << endl;
+        //cout << ss.str() << ", " << tss << endl;
 
         img.grabScreen(0, 0 , ofGetWidth(), ofGetHeight());
         img.save("img-" + tss + ".png");
+
     }
 
 }
