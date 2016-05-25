@@ -11,20 +11,29 @@ class ofApp : public ofBaseApp{
 
     int wh; // resolution, i.e. width*height;
     double x, y, ix, iy;
+    int X, Y;
     double min = -1.0;
     double max = 1.0;
 
     int count;
-    int nt = 3; // num transforms
-    int np = 5000; // num points
+    int nt = 2; // num transforms
+    int np = 200000; // num points
 
     int width, height;
 
-    vector<ofVec2f> transforms;
+    vector<vector<float>> transforms;
     vector<int> points;  // 'hit count' for pixels
 
-    ofImage screen;
-    //ofPixels screenPixels;
+    ofPixels pixels;
+    ofTexture tex;
+
+    // for screenshots
+    ofImage img;
+
+    //float probs[6] = {1.0/6, 2.0/6, 3.0/6, 4.0/6, 5.0/6, 6.0/6};
+    //float probs[4] = {0.5, 0.65, 0.75, 1.0};
+    //float probs[3] = {0.333, 0.666, 1.0};
+    float probs[2] = {0.5, 1.0};
 
 	public:
         void init();
@@ -44,5 +53,7 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
+        string uint64_to_string( uint64_t value );
+        int chooseTransform(int n);
 		
 };
