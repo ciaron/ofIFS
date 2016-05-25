@@ -37,20 +37,15 @@ void ofApp::init() {
     }
 
     for (int j=size-2; j<size; ++j){
-      t.push_back(ofRandom(-1.05, 1.05));
+      t.push_back(ofRandom(-0.5, 0.5));
     }
 
-//    t[1] = 0.0;
-//    t[2] = -1.0*t[1];
+   // t[1] = 0.0;
+    t[2] = -1.0*t[1];
 
-    t[0] = t[3];
-    t[1] = -1.0*t[2];
-    t[4] = t[5];
-
-    //t[2] = ;
-    //t[3] = ;
-    //t[4] = t[5];
-    //t[5] = ;
+ //   t[0] = t[3];
+ //   t[1] = -1.0*t[2];
+ //   t[4] = t[5];
 
     transforms.push_back(t);
 
@@ -157,20 +152,10 @@ void ofApp::draw(){
 
   //ofBackground(0);
   for (int n=0; n<width*height; n++){
-
-<<<<<<< HEAD
-    if (points[n] > 0) {
-
-      screenPixels[n*4] = 255;
-      screenPixels[(n*4)+1] = 255;
-      screenPixels[(n*4)+2] = 255;
-      screenPixels[(n*4)+3] = (int)(ofRandom(1.0)* 255);
-=======
       if (points[n] > 0) {
           //pixels.setColor(n*4, ofColor(255,255,255, (int)(ofRandom(0,255))));
           float c = 255*log(points[n])/log(np);
           pixels.setColor(n*4, ofColor(c,c,c));
->>>>>>> 2768310382c52376e6490ea58c6349de6091f2fb
 
     }
   }
